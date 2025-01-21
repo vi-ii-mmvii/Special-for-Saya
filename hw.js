@@ -11,17 +11,10 @@ calcFr('1');
 calcFr(6456.87789);
 
 
- let temperature=7; //global scope
 function calcC(fr) {
   let celsius = (fr - 32) * 5 / 9;
   console.log(`Температура ${fr}\u00B0F в градусах Цельсия: ${celsius.toFixed(2)} \u00B0C`);
-  if (true) {
-    let x = 10; // Variable x has block scope
-    console.log(x); // Output: 10
-  }
 }
-console.log(temperature);
-console.log(celsius);
 calcC(34);
 calcC(43.7);
 calcC(84.867);
