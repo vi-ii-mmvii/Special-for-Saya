@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go For President</title>
+</head>
+<body>
+    <h1>Check Your Eligibility for Presidency</h1>
+
+    <label for="years">Enter your residency duration (years):</label>
+    <input type="number" id="years" placeholder="Enter residency years">
+
+    <label for="lang">Do you speak Kazakh? (yes/no):</label>
+    <input type="text" id="lang">
+
+    <button onclick="suitablilityToConditions()">Check</button>
+    <p id="result"></p>
+
+    <script>
+        function suitablityToConditions() {
+            let age = document.getElementById('ageInput').value;
+            let living = document.getElementById('years').value;
+            let lang = document.getElementById('lang').value.toLowerCase();
+            let message;
+
+            if (age >= 40 && living >= 15 && lang === "yes") {
+                message = "Вы имеете право подать заявку на должность президента РК.";
+            } else if (age < 40) {
+                message = "Вы слишком молоды для подачи заявки.";
+            } else if (residency < 15) {
+                message = "Вы должны прожить в Казахстане не менее 15 лет.";
+            } else if (language !== "yes") {
+                message = "Вы должны свободно владеть казахским языком.";
+            } else {
+                message = "Вы не соответствуете требованиям для подачи заявки.";
+            }
+
+            document.getElementById('result').innerText = message;
+        }
+    </script>
+</body>
+</html>
