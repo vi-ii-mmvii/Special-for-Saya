@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name Condition</title>
+    <style>
+        input{
+            width: 10em;
+            height: 2.5em;
+        }
+        button{
+            height: 2.6em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Check are U lucky or not</h1>
+    <input type="text" id="name" placeholder="Enter your name" required>
+    <button onclick="checking()">Check</button>
+    <p id="result"></p>
+    <script>
+        function checking() {
+            let name = document.getElementById('name').value.trim();
+            let message;
+            if (name === "Жасмин") {
+                message = "Сегодня твой счастливый день! получи свой приз";
+            } else if (name === "Aidana") {
+                message = "Сегодня и твой счастливый день! получи свою скидку";
+            } else {
+                message = `Добро пожаловать, ${name}`;
+            }
+
+            document.getElementById('result').innerText = message;
+        }
+    </script>
+</body>
+</html>
