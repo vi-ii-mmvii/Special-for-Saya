@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go For President</title>
+</head>
+<body>
+    <h1>Number?</h1>
+    <input type="number" id="numInput" placeholder="Enter your age">
+
+    <button onclick="suitabilityToConditions()">Check</button>
+    <p id="result"></p>
+
+    <script>
+        function suitabilityToConditions() {
+            let message;
+            let num = parseInt(document.getElementById('numInput').value);
+            let res = document.getElementById('result');
+
+            for (let i = 1; i <= num; ++i) {
+                if (i % 3 === 0 && i % 5 === 0) {
+                    message = "fizz and bizz";
+                } else if (i % 3 === 0) {
+                    message = "fizz";
+                } else if (i % 5 === 0) {
+                    message = "bizz";
+                } else {
+                    message = i;
+                }
+                res.innerHTML += i+ " is equal to " +message + '<br>';
+            }
+        }
+    </script>
+</body>
+</html>
