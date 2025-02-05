@@ -1,17 +1,29 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Array Operations</title>
-</head>
-<body>
-    <h1>Array Operations in JavaScript</h1>
-
-    <script>
-        let array = [10, 20, 30, 40, 50];
-        console.log(array[2]);
-        array[2] = 99;
-        console.log(array);
-    </script>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Array Operations</title>
+    </head>
+    <body>
+        <h1>Array Operations in JavaScript</h1>
+        <p>Write the massive numbers, if you want to leave it write down 00</p>
+        <input type="number" id="Input" placeholder="Only int element" />
+        <button onclick="Massive()">Check</button>
+        <p id="result"></p>
+        <script>
+            let array = [];
+            
+            function Massive() {
+                let num = document.getElementById("Input").value;
+                let res = document.getElementById("result");
+                if (num != 0) {
+                    array.push(num);
+                } else {
+                    for (let i = 0; i < array.length; ++i) {
+                        console.log(array[i]);
+                        res.innerHTML += i + " is equal to " + array[i] + "<br>";
+                    }
+                }
+            }
+        </script>
+    </body>
 </html>
