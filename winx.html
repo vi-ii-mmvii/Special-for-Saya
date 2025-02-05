@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Array Operations</title>
+</head>
+<body>
+    <h1>Array Operations in JavaScript</h1>
+    <p>Write the massive numbers, if you want to leave it write down 00</p>
+    <input type="number" id="Input" placeholder="Only int element">
+    <button onclick="Massive()">Check</button>
+    <p id="result"></p>
+    <script>
+        function printing(){
+        let favBooks=["HP", "OnePiece", "Naruto", "winx", "witches"]
+        for (let i=0; i<favBooks.length; ++i){
+            console.log(favBooks[i]);
+        }
+        favBooks.push("Inchantix");
+        for (let i=0; i<favBooks.length; ++i){
+            console.log(favBooks[i]);
+        }
+    }
+    printing();
+
+    let student ={
+        name: "Liza",
+        city: "Almaty",
+        grade: 85,
+        graduated: 2027
+    }
+    console.log(student.name + " lives in" + student.city +" her grade is "+student.grade + " in "+ student.graduated);
+    student.name = "Mary";
+    student.city = "Krg";
+    student.grade =73   ;
+    student.graduated = 2027;
+    console.log(student.name + " lives in" + student.city +" her grade is "+student.grade + " in "+ student.graduated);
+    </script>
+</body>
+</html>
