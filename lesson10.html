@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Array Operations</title>
+</head>
+<body>
+    <h1>Array Operations in JavaScript</h1>
+    <p>Write the massive numbers, if you want to leave it write down 00</p>
+    <script>
+    //    function printing(){
+    //    let favBooks=["HP", "OnePiece", "Naruto", "winx", "witches"]
+    //    for (let i=0; i<favBooks.length; ++i){
+    //        console.log(favBooks[i]);
+    //    }
+    //    favBooks.push("Inchantix");
+    //    for (let i=0; i<favBooks.length; ++i){
+    //        console.log(favBooks[i]);
+    //    }
+    //}
+    //printing();
+
+    let student =[{
+        firstName: "Kamilla",
+        lastName: "Sat",
+        email: "thisone",
+        phoneNumber: 89989347384, 
+        city: "Luhask",
+        subject: "xenvhjd",
+        grade: 100,
+        favFood: ['idk', 
+        {
+            drinks:['milk', 'soda', ['ulun tea','white tea', 'puer']],
+            firstMeal: ['pumpkin soup', 'shorpa'],
+            desserts: 'Moti'
+        }
+        ]
+    },
+    {
+       firstName: "Nasy",
+        lastName: "Kasy",
+        email: "@thisone",
+        phoneNumber: 8764623562, 
+        city: "LuhaAlmatysk",
+        subject: "s",
+        grade: 50,
+        favFood: ['idk', 'coffeeee']
+    },
+    { 
+        firstName: "Felix",
+        lastName: "Thik",
+        email: "@email.com",
+        phoneNumber: 87655555562, 
+        city: "Astana",
+        subject: "geography",
+        grade: 30,
+        favFood: ['Ketchup', 'ulun']
+    }
+    
+]
+console.log(student[0].email);
+console.log(student[2].lastName);
+console.log(student[1].favFood[1]);
+let gradeLetter;
+function greeting(){
+for (let i=0; i<student.length; ++i){
+    console.log("Greetings, "+ student[i].firstName +" " + student[i].lastName +"!");
+
+    //Homeworks grade-Letter
+    if(student[i].grade >= 90){
+        gradeLetter="A";
+    }
+    else if(student[i].grade >= 70 && student[i].grade < 90) {
+        gradeLetter="B";
+    }
+    else if (student[i].grade >= 50 && student[i].grade < 70){
+        gradeLetter="C";
+    }else {
+        gradeLetter="F";
+    }
+    console.log(gradeLetter);
+}
+}
+greeting();
+console.log(student[0].favFood[1].drinks[2][1])
+//favFood: ['idk', 
+//        {
+//            drinks:['milk', 'soda', ['ulun tea','white tea', 'puer']],
+//            firstMeal: ['pumpkin soup', 'shorpa'],
+//            desserts: 'Moti'
+//        }
+//        ]
+
+ //   console.log(student.name + " lives in" + student.city +" her grade is "+student.grade + " in "+ student.graduated);
+//    student.name = "Mary";
+ //   student.city = "Krg";
+//    student.grade =73   ;
+ //   student.graduated = 2027;
+//    console.log(student.name + " lives in" + student.city +" her grade is "+student.grade + " in "+ student.graduated);
+let food = {
+    plants: {
+        plods: [
+            ['fruits', {
+            sour: 'blackberries', 
+            sweet: 'strawberry'
+        }
+    ],
+     'vegetables'],
+        grain: 'rice',
+    },
+    animals: {
+        meat: 'chicken',
+        seafood: 'fish',
+        dairy: ['milk', 'cheese', 'yogurt']
+    },
+    etc: {
+        spices: ['salt', 'pepper', 'cumin'],
+        beverages: 'tea',
+    }
+};
+console.log(food.plants.plods[0][1].sweet);
+
+    </script>
+</body>
+</html>
