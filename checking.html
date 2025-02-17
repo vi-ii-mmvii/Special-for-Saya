@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go For President</title>
+</head>
+<body>
+    <h1>Is it a Palindrome?</h1>
+    <input type="text" id="input" placeholder="Enter a string" required>
+    <button onclick="checkPalindrome()">Check</button>
+    <p id="result"></p>
+
+    <script>
+function checkPalindrome() {
+    let string = document.getElementById('input').value.toLowerCase();
+    let reverse = string.split('').reverse().join('');
+    let ans;
+
+    if (string === reverse) {
+        ans = "It is a palindrome!";
+    } else {
+        ans = "It is not a palindrome.";
+    }
+    document.getElementById('result').innerHTML = ans;
+}
+    </script>
+</body>
+</html>
