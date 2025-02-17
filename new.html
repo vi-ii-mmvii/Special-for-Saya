@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go For President</title>
+</head>
+<body>
+    <script>
+       const paragraph = "the quiek brown fox jumps over the lazy dog. If the dog barked , was a really lazy?";
+       const searchTerm = "dog";
+       let startIndex = 0;
+       while ((index = paragraph.indexOf(searchTerm, startIndex)) !== -1) {
+        console.log(`"${searchTerm}" found at index ${index}`);
+        startIndex = index + searchTerm.length;
+}
+    </script>
+</body>
+</html>
