@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go For President</title>
+</head>
+<body>
+    <h2>Recipe Information</h2>
+    <button onclick="displayRecipe()">Show Recipe</button>
+    <p id="recipeDetails"></p>
+    <script>
+        let recipe = {
+            title: "Pancakes",
+            col: 4,
+            components: ["Flour", "Milk", "Eggs", "Sugar", "Baking powder", "Salt", "Butter"],
+            strategy: "Mix all ingredients, heat a pan, and cook pancakes until golden brown."
+        };
+        function displayRecipe() {
+            let details = `
+                <strong>Recipe:</strong> ${recipe.title} <br>
+                <strong>Servings:</strong> ${recipe.col} <br>
+                <strong>Ingredients:</strong><br>
+            `;
+
+            recipe.components.forEach(component => {
+                details += `- ${component} <br>`;
+            });
+
+            details += `<strong>How to do?:</strong> ${recipe.strategy}`;
+
+            document.getElementById('recipeDetails').innerHTML = details;
+        }
+    </script>
+</body>
+</html>
