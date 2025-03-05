@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Just JS</title>
+</head>
+<body>
+    <script>
+        function add(num1, num2, num3) {
+    return num1 + num2 + num3;
+}
+// O(1) - три перемменные, один раз функция срабатывает, и выводит
+
+function sayHello(numberOfTimes) {
+    for (var i = 0; i < numberOfTimes; i++) { //O(n)
+        console.log("Hello");
+    }
+}
+// function will run n times, where n is the numberOfTimes
+
+function logMultiples(n) {
+    for (var num1 = 1; num1 <= n; num1++) { //O(n)
+        for (var num2 = 1; num2 <= n; num2++) { //O(n)
+            console.log(num1 * num2);
+        }
+    }
+}
+// O(n^2), функция зависит от цикла в цикле, то есть от n^2
+function logMultiples2(a, b) {
+    for (var num1 = 1; num1 <= a; num1++) { //O(n)
+        for (let num2 = 1; num2 <= b; num2++) { // O(m)
+            console.log("test");
+        }
+    }
+}
+// O(n*m), функция зависит от цикла, который пробежит b раз, в цикле который пробежит a раз
+
+function sum(x) {
+    for (let i = 0; i < x; i++) { //O(n)
+        console.log("test");
+    }
+}
+// O(n), также как в первом 
+    </script>
+</body>
+</html>
