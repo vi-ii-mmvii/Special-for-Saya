@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Array Operations</title>
+</head>
+<body>
+  <div>
+    <img id="avatar" src="">
+    <p id="name"></p>
+    <p id="height"></p>
+    <p id="weight"></p>
+</div>
+    <script>
+        var data = {
+    "abilities": [
+      {
+        "ability": {
+          "name": "chlorophyll",
+          "url": "https://pokeapi.co/api/v2/ability/34/"
+        },
+        "is_hidden": true,
+        "slot": 3
+      },
+      {
+        "ability": {
+          "name": "overgrow",
+          "url": "https://pokeapi.co/api/v2/ability/65/"
+        },
+        "is_hidden": false,
+        "slot": 1
+      }
+    ],
+    "base_experience": 64,
+    "forms": [
+      {
+        "name": "bulbasaur",
+        "url": "https://pokeapi.co/api/v2/pokemon-form/1/"
+      }
+    ],
+    "height": 7,
+    "id": 1,
+    "is_default": true,
+    "location_area_encounters": "https://pokeapi.co/api/v2/pokemon/1/encounters",
+    "moves": [
+      {
+        "move": {
+          "name": "razor-wind",
+          "url": "https://pokeapi.co/api/v2/move/13/"
+        },
+        "version_group_details": [
+          {
+            "level_learned_at": 0,
+            "move_learn_method": {
+              "name": "egg",
+              "url": "https://pokeapi.co/api/v2/move-learn-method/2/"
+            },
+            "version_group": {
+              "name": "crystal",
+              "url": "https://pokeapi.co/api/v2/version-group/4/"
+            }
+          },
+          {
+            "level_learned_at": 0,
+            "move_learn_method": {
+              "name": "egg",
+              "url": "https://pokeapi.co/api/v2/move-learn-method/2/"
+            },
+            "version_group": {
+              "name": "gold-silver",
+              "url": "https://pokeapi.co/api/v2/version-group/3/"
+            }
+          }
+        ]
+      }
+      ],
+  
+    "name": "bulbasaur",
+    "order": 1,
+    "species": {
+      "name": "bulbasaur",
+      "url": "https://pokeapi.co/api/v2/pokemon-species/1/"
+    },
+    "sprites": {
+      "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png",
+      "back_female": null,
+      "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/1.png",
+      "back_shiny_female": null,
+      "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+      "front_female": null,
+      "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/1.png",
+      "front_shiny_female": null
+    },
+    "stats": [
+      {
+        "base_stat": 45,
+        "effort": 0,
+        "stat": {
+          "name": "speed",
+          "url": "https://pokeapi.co/api/v2/stat/6/"
+        }
+      },
+      {
+        "base_stat": 65,
+        "effort": 0,
+        "stat": {
+          "name": "special-defense",
+          "url": "https://pokeapi.co/api/v2/stat/5/"
+        }
+      },
+      {
+        "base_stat": 65,
+        "effort": 1,
+        "stat": {
+          "name": "special-attack",
+          "url": "https://pokeapi.co/api/v2/stat/4/"
+        }
+      },
+      {
+        "base_stat": 49,
+        "effort": 0,
+        "stat": {
+          "name": "defense",
+          "url": "https://pokeapi.co/api/v2/stat/3/"
+        }
+      },
+      {
+        "base_stat": 49,
+        "effort": 0,
+        "stat": {
+          "name": "attack",
+          "url": "https://pokeapi.co/api/v2/stat/2/"
+        }
+      },
+      {
+        "base_stat": 45,
+        "effort": 0,
+        "stat": {
+          "name": "hp",
+          "url": "https://pokeapi.co/api/v2/stat/1/"
+        }
+      }
+    ],
+    "types": [
+      {
+        "slot": 2,
+        "type": {
+          "name": "poison",
+          "url": "https://pokeapi.co/api/v2/type/4/"
+        }
+      },
+      {
+        "slot": 1,
+        "type": {
+          "name": "grass",
+          "url": "https://pokeapi.co/api/v2/type/12/"
+        }
+      }
+    ],
+    "weight": 69
+  }
+//1
+  let weightStr = data.weight.toString();
+  let heightStr = data.height.toString();
+
+//2
+  let weightNum = parseInt (weightStr);
+  let heightNum = parseInt (heightStr);
+  const massIndex = weightNum / Math.pow(heightNum, 2);
+  console.log(weightNum, heightNum, massIndex);
+
+//3
+  let pockemonName = data.name.toString();
+  let nameLen = pockemonName.length;
+  pocName=pockemonName.toUpperCase();
+  console.log(pocName);
+  
+//4
+  let check = pockemonName.includes("bulba");
+  console.log(check);
+
+//5
+  let slice1 = pockemonName.slice(0, 2);
+  let slice2 = pockemonName.slice(-2);
+  console.log(slice1, slice2);
+  let newName = slice1 + slice2;
+  console.log(newName);
+//6
+//I didnt get it 
+//7
+  let types = data.types;
+  console.log(types[0].type.name);
+  console.log(types[1].type.name);
+  for (let i=0; i<types.length; ++i){
+    console.log(types[i].type.name);
+  }
+//8
+  let ab = data.abilities;
+  console.log(Array.isArray(ab));
+  let ab_name = [];
+  for (let i=0; i<data.abilities.length; ++i){
+    ab_name.push(data.abilities[i].ability.name);
+  }
+//9
+let lastEl = data.abilities[data.abilities.length - 1].ability.name;
+console.log(lastEl);
+//10
+  ab_name.push(lastEl);
+  console.log(ab_name);
+  //11
+  let stat =[];
+  for (let i=0; i<data.stats.length; ++i){
+     stat.push( data.stats[i].base_stat);
+  }
+  console.log(stat);
+  let sumOfStat = 0;
+  stat.forEach(function(item){
+  sumOfStat += item;
+});
+//12
+  console.log(sumOfStat);
+  stat.push(11);
+  let filteredStat = stat.filter(value => value > 47);
+  console.log (filteredStat);
+//13
+  let copied = [...stat];
+  let revStat = copied.reverse();
+  console.log (revStat);
+  const mergedValues = stat.join('');
+  console.log(mergedValues);
+  //14
+  let shallow_copy =stat.slice(0, 2);
+  console.log(shallow_copy);
+  //15
+  stat[0]="Adina";
+  console.log(stat);
+  //16
+  document.getElementById('avatar').src = data.sprites.front_default;
+  document.getElementById('name').innerHTML = data.name;
+  document.getElementById('height').innerHTML = data.height;
+  document.getElementById('weight').innerHTML = data.weight;
+    </script>
+</body>
+</html>
