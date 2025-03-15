@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Tasks</title>
+</head>
+<body>
+
+    <h2>Dashes between two even numbers</h2>
+    <input type="text" id="numInput" placeholder="Enter a number">
+    <button onclick="forDashes()">Process</button>
+    <p id="dash_res"></p>
+
+    <h2>Sort array</h2>
+    <input type="text" id="arrayInput" placeholder="Separate by commas">
+    <button onclick="sortArray()">Sort</button>
+    <p id="sort_res"></p>
+
+    <h2>Most frequent element</h2>
+    <input type="text" id="freqInput" placeholder="Separate by commas">
+    <button onclick="mostFrequent()">Find</button>
+    <p id="freq_res"></p>
+
+    <script>
+        // Function 1: Insert dashes between even numbers
+        function forDashes() {
+            let num = document.getElementById("numInput").value;
+            let str = num.toString();
+            let result = '';
+
+            for (let i = 0; i < str.length; i++) {
+                result += str[i];
+                if (i < str.length - 1 && parseInt(str[i]) % 2 === 0 && parseInt(str[i + 1]) % 2 === 0) {
+                    result += '-';
+                }
+            }
+            document.getElementById("dash_res").innerText = result;
+        }
+
+        // Function 2: Sorting an array
+
+        function sortArray() {
+            let input = document.getElementById("arrayInput").value;
+            let arr = input.split(',').map(Number);
+            document.getElementById("sort_res").innerText = sort_array(arr).join(', ');
+        }
+        function sort_array(arr) {
+            return arr.sort((a, b) => a - b);
+        }
+
+        // Function 3: Find the most frequent element
+        function most_frequent(arr) {
+            let freqMap = {};
+            let maxCount = 0;
+            let mostFrequentItem;
+
+            arr.forEach(item => {
+                freqMap[item] = (freqMap[item] || 0) + 1;
+                if (freqMap[item] > maxCount) {
+                    maxCount = freqMap[item];
+                    mostFrequentItem = item;
+                }
+            });
+
+            return `${mostFrequentItem} (${maxCount} times)`;
+        }
+
+        function mostFrequent() {
+            let input = document.getElementById("freqInput").value;
+            let arr = input.split(',').map(item => isNaN(item) ? item.trim() : Number(item));
+            document.getElementById("freq_res").innerText = most_frequent(arr);
+        }
+    </script>
+
+</body>
+</html>
