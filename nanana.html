@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tips</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 1rem;
+      background: #f2f2f2;
+    }
+    .tip-form {
+      max-width: 400px;
+      margin: auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    }
+    .tip-form h2 {
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 1.5em;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+    input, datalist {
+      width: 100%;
+      padding: 0.5em;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+    .result {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    @media (min-width: 600px) {
+      .tip-form {
+        padding: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<form class="tip-form">
+  <h2>Калькулятор чаевых</h2>
+
+  <div class="form-group">
+    <label for="bill">Сумма счёта (₸):</label>
+    <input type="number" id="bill" placeholder="Введите сумму..." required>
+  </div>
+
+  <div class="form-group">
+    <label for="tip">Процент чаевых:</label>
+    <input type="text" id="tip" list="tip-options" placeholder="Например, 10%" required>
+    <datalist id="tip-options">
+      <option value="10%">
+      <option value="15%">
+      <option value="20%">
+      <option value="25%">
+    </datalist>
+    <label for = "amount-people">Количество человек:</label>
+    <input type="number" id="amount-people" placeholder="Введите количество человек..." required>
+  </div>
+
+  <div class="result">
+    <p>Чаевые: <span id="tip-amount">₸0</span></p>
+    <p>Итоговая сумма: <span id="total-amount">₸0</span></p>
+    <p>Итоговая сумма на человека: <span id="total-amount-per-person">₸0</span></p>
+  </div>
+</form>
+
+<script>
+  const bills = document.getElementById('bill');
+  const tips = document.getElementById('tip');
+  const amountPeople = document.getElementById('amount-people');
+  const tipInt = document.getElementById('tip-amount');
+  const totalInt = document.getElementById('total-amount');
+  const totalPerPersonInt = document.getElementById('total-amount-per-person');
+
+  function calculateTip() {
+    let bill = parseFloat(bills.value) || 0;
+    let tipInput = tips.value.replace('%', '').trim();
+    let tipPercent = parseFloat(tipInput) / 100 || 0;
+    let tipAmount = bill * tipPercent;
+    let total = bill + tipAmount;
+    let total_per_person = total / amountPeople.value;
+    tipInt.textContent = `₸${tipAmount.toFixed(2)}`;
+    totalInt.textContent = `₸${total.toFixed(2)}`;
+    totalPerPersonInt.textContent = `₸${total_per_person.toFixed(2)}`;
+  }
+
+  bills.addEventListener('input', calculateTip);
+  tips.addEventListener('input', calculateTip);
+</script>
+</body>
+</html>
