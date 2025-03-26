@@ -1,0 +1,92 @@
+
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tips</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 1rem;
+      background: #f2f2f2;
+    }
+    .tip-form {
+      max-width: 400px;
+      margin: auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    }
+    .tip-form h2 {
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 1.5em;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+    input, datalist {
+      width: 100%;
+      padding: 0.5em;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+    .result {
+      font-weight: bold;
+      font-size: 18px;
+      margin:4em;
+    }
+    @media (min-width: 600px) {
+      .tip-form {
+        padding: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<form class="tip-form">
+  <h2>Randomizer</h2>
+  <div class="result" id="result"></div>
+  <div class="form-group">
+    <label for="max">Maximum</label>
+    <input type="number" id="max" placeholder="Введите max..." required>
+  </div>
+  <div class="form-group">
+    <label for="min">Minimum</label>
+    <input type="number" id="min" placeholder="Введите min..." required>
+  </div>
+
+  <div class="end">
+    <button type="button" id="turn-on">Generate</button>
+    <button type="button" id="refresh">Clear</button>
+  </div>
+</form>
+
+<script>
+  function randomizer() {
+    const maxInt = parseInt(document.getElementById('max').value);
+    const minInt = parseInt(document.getElementById('min').value);
+    const resultDiv = document.getElementById('result');
+
+    if ( maxInt <= minInt) {
+      resultDiv.textContent = 'Min is greater than max';
+      return;
+    }
+//logic
+    const randomNum = Math.floor(Math.random() * (maxInt - minInt + 1)) + minInt;
+    resultDiv.textContent = `Generated Number: ${randomNum}`;
+  }
+
+  document.getElementById('turn-on').addEventListener('click', randomizer);
+  document.getElementById('refresh').addEventListener('click', function() {
+    document.getElementById('max').value = '';
+    document.getElementById('min').value = '';
+    document.getElementById('result').textContent = ' ';
+  });
+    </script>
+</body>
+</html>

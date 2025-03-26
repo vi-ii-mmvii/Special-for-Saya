@@ -1,0 +1,62 @@
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tips</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 1rem;
+      background: #f2f2f2;
+    }
+    .tip-form {
+      max-width: 400px;
+      margin: auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    }
+    .empty-box-with-bg {
+      background-color: #f2f2f2;
+      width: 80%;
+      padding: 10px;
+      text-align: center;
+      margin: 5%;
+      border-radius: 7.5px;
+      color: #ffffff;
+    }
+    @media (min-width: 600px) {
+      .tip-form {
+        padding: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <form class="tip-form">
+    <div class="empty-box-with-bg">
+      <h1 id="random-number"></h1>
+    </div>
+    <div class="end">
+      <button type="button" id="turn-on">Generate</button>
+    </div>
+  </form>
+
+  <script>
+    document.getElementById('turn-on').addEventListener('click', function() {
+      const randomNum1 = Math.floor(Math.random() * 255) + 1;
+      const randomNum2 = Math.floor(Math.random() * 255) + 1;
+      const randomNum3 = Math.floor(Math.random() * 255) + 1;
+      const newColor = `rgb(${randomNum1}, ${randomNum2}, ${randomNum3})`;
+      document.getElementById('random-number').textContent = `Our Bg-color is rgb(${randomNum1}, ${randomNum2}, ${randomNum3});`;
+      document.getElementsByClassName('empty-box-with-bg')[0].style.backgroundColor = newColor;
+
+
+      if (randomNum1 >= 128 || randomNum2 >= 128 || randomNum3 >= 128) {
+        document.getElementsByClassName('empty-box-with-bg')[0].style.color = "#000000";
+      }
+    });
+  </script>
+</body>
+</html>
