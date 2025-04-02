@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Transition</title>
+    <style>
+        .photo-wrapper {
+            position: relative;
+            overflow: hidden;
+            height: 200px;
+
+        }
+
+        .photo-wrapper img {
+            position: absolute;
+            height: 100%;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .hidden {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="photo-wrapper">
+        <img id="photo1" src="lighton.png" alt="Photo 1">
+        <img id="photo2" src="lightoff.png" alt="Photo 2" class="hidden">
+    </div>
+    <button id="btn" onclick="changePhoto()">Turn-off</button>
+
+    <script>
+        function changePhoto() {
+            const photo1 = document.getElementById('photo1');
+            const photo2 = document.getElementById('photo2');
+            const button = document.getElementById('btn');
+
+            if (photo1.classList.contains('hidden')) {
+                photo1.classList.remove('hidden');
+                photo2.classList.add('hidden');
+                button.innerHTML = "Turn-off";
+
+            } else {
+                photo1.classList.add('hidden');
+                photo2.classList.remove('hidden');
+                button.innerHTML = "Turn-on";
+            }
+        }
+    </script>
+</body>
+</html>
