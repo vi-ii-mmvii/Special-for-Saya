@@ -178,6 +178,13 @@ function fillActiveSquare(enteredValue, solution) {
     }
   }
 }
+
+  document.addEventListener('keydown', function(event) {
+    if (activeSquare && /^[1-9]$/.test(event.key)) {
+      fillActiveSquare(parseInt(event.key, 10), sudokuSolution);
+    }
+  });
+
   </script>
 </body>
 </html>
