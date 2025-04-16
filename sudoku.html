@@ -48,6 +48,15 @@
 </head>
 <body>
   <h1>Sudoku Game</h1>
+  <div id="controls">
+    <label for="difficulty">Выберите уровень сложности: </label>
+    <select id="difficulty">
+      <option value="20">Лёгкий</option>
+      <option value="30" selected>Средний</option>
+      <option value="50">Сложный</option>
+    </select>
+    <button id="newGame">Новая игра</button>
+  </div>
   <div id="board"></div>
   <div id="buttons">
     <!--desk will spawn by JS-->
@@ -62,6 +71,10 @@
     <button class="number" id="9">9</button>
   </div>
   <div id="timer">Время: 00:00</div>
+  <div id="history">
+    <h2>История игр</h2>
+    <ul id="historyList"></ul>
+  </div>
   <script>
   function generateSudoku() {
     const board = Array.from({ length: 9 }, () => Array(9).fill(0)); //еще нет цифр
@@ -202,6 +215,46 @@ function fillActiveSquare(enteredValue, solution) {
       timerInterval = setInterval(updateTimer, 1000);
     }
 
+    function startGame() {
+      const blanksCount = parseInt(document.getElementById('difficulty').value, 10);
+      sudokuSolution = generateSudoku();
+      const puzzleBoard = createPuzzle(sudokuSolution, blanksCount);
+      renderBoard(puzzleBoard);
+      setupBoardInteraction(sudokuSolution);
+      startTimer();
+    }
+    
+    document.getElementById('newGame').addEventListener('click', startGame);
+    let gameCount = 0;
+    let gameHistory = [];
+    
+    function checkGameCompleted() {
+      const fixedCount = document.querySelectorAll('#board .square.fixed').length;
+      if (fixedCount === 81) {
+        clearInterval(timerInterval);
+        recordGameHistory();
+        alert("Поздравляем! Вы решили Судоку.");
+      }
+    }
+    
+    function recordGameHistory() {
+      gameCount++;
+      const minutes = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+      const seconds = String(secondsElapsed % 60).padStart(2, '0');
+      const timeStr = `${minutes}:${seconds}`;
+      gameHistory.push({ game: gameCount, time: timeStr });
+      updateHistoryDisplay();
+    }
+    
+    function updateHistoryDisplay() {
+      const historyList = document.getElementById('historyList');
+      historyList.innerHTML = '';
+      gameHistory.forEach(record => {
+        const li = document.createElement('li');
+        li.textContent = `Игра ${record.game}: ${record.time}`;
+        historyList.appendChild(li);
+      });
+    }
   </script>
 </body>
 </html>
