@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sudoku Game</title>
   <style>
     body {
@@ -10,6 +11,18 @@
       text-align: center;
       margin: 0;
       padding: 0;
+    }
+    h1 {
+      color: #333;
+      margin-top: 20px;
+    }
+    #controls {
+      margin: 20px auto;
+    }
+    #timer {
+      font-size: 24px;
+      margin: 10px;
+      color: #333;
     }
     #board {
       display: grid;
@@ -32,6 +45,21 @@
       background-color: #f0f0f0;
       cursor: pointer;
     }
+    .selected {
+      background-color: #97968a;
+      cursor: crosshair;
+    }
+    .fixed {
+      background-color: #ddd;
+      cursor: default;
+    }
+    .error {
+      background-color: #f88;
+    }
+    #buttons {
+      margin: 50px auto;
+      gap: 10px;
+    }
     button.number {
       width: 60px;
       height: 60px;
@@ -40,9 +68,33 @@
       border-radius: 5px;
       background-color: #fff;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
     button.number:hover {
       background-color: #ddd;
+    }
+    /* Секция истории игр */
+    #history {
+      margin: 20px auto;
+      width: 300px;
+      text-align: left;
+      background-color: #fff;
+      padding: 10px;
+      border: 2px solid #333;
+      border-radius: 5px;
+    }
+    #history h2 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+    #history ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    #history li {
+      border-bottom: 1px solid #ccc;
+      padding: 5px 0;
+      font-size: 16px;
     }
   </style>
 </head>
@@ -51,15 +103,15 @@
   <div id="controls">
     <label for="difficulty">Выберите уровень сложности: </label>
     <select id="difficulty">
-      <option value="20">Лёгкий</option>
-      <option value="30" selected>Средний</option>
+      <option value="30">Лёгкий</option>
+      <option value="40" selected>Средний</option>
       <option value="50">Сложный</option>
     </select>
     <button id="newGame">Новая игра</button>
   </div>
+  <div id="timer">Время: 00:00</div>
   <div id="board"></div>
   <div id="buttons">
-    <!--desk will spawn by JS-->
     <button class="number" id="1">1</button>
     <button class="number" id="2">2</button>
     <button class="number" id="3">3</button>
@@ -70,137 +122,18 @@
     <button class="number" id="8">8</button>
     <button class="number" id="9">9</button>
   </div>
-  <div id="timer">Время: 00:00</div>
+  <!-- Секция истории игр -->
   <div id="history">
     <h2>История игр</h2>
     <ul id="historyList"></ul>
   </div>
+
   <script>
-  function generateSudoku() {
-    const board = Array.from({ length: 9 }, () => Array(9).fill(0)); //еще нет цифр
-//размер
-    function isValid(board, row, col, num) {
-      for (let i = 0; i < 9; i++) {
-        if (board[row][i] === num || board[i][col] === num) return false;
-      }
-      const startRow = Math.floor(row / 3) * 3;
-      const startCol = Math.floor(col / 3) * 3;
-      for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3; j++) {
-          if (board[startRow + i][startCol + j] === num) return false;
-        }
-      }
-      return true;
-    }
-
-    function shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-
-    function solve(board) {
-      for (let row = 0; row < 9; row++) {
-        for (let col = 0; col < 9; col++) {
-          if (board[row][col] === 0) {
-            const numbers = shuffle([1,2,3,4,5,6,7,8,9]); //меняем слогаемые в ряду 
-            for (let num of numbers) {
-              if (isValid(board, row, col, num)) {
-                board[row][col] = num;
-                if (solve(board)) return true;
-                board[row][col] = 0;
-              }
-            }
-            return false;
-          }
-        }
-      }
-      return true;
-    }
-
-    solve(board);
-    return board;
-  }
-  function createPuzzle(solution, blanksCount) {
-    //клонируем решенный судоку чтобы спрятать числа
-    const puzzle = solution.map(row => row.slice()); 
-    let removed = 0;
-    while (removed < blanksCount) {
-      const row = Math.floor(Math.random() * 9);
-      const col = Math.floor(Math.random() * 9);
-      if (puzzle[row][col] !== 0) {
-        puzzle[row][col] = 0;
-        removed++;
-      }
-    }
-    return puzzle;
-  }
-  function renderBoard(board) {
-    const boardContainer = document.getElementById('board');
-    boardContainer.innerHTML = '';
-    for (let row = 0; row < 9; row++) {
-      for (let col = 0; col < 9; col++) {
-        const square = document.createElement('div');
-        square.classList.add('square');
-        square.dataset.row = row;
-        square.dataset.col = col;
-        if (board[row][col] !== 0) {
-          square.textContent = board[row][col];
-          square.classList.add('fixed');
-        }
-        boardContainer.appendChild(square);
-      }
-    }
-  }
-  let activeSquare = null;
-
-function setupBoardInteraction(solution) {
-  const squares = document.querySelectorAll('#board .square');
-  squares.forEach(square => {
-    if (!square.classList.contains('fixed')) {
-      square.addEventListener('click', function() {
-        squares.forEach(sq => sq.classList.remove('selected'));
-        square.classList.add('selected');
-        activeSquare = square;
-      });
-    }
-  });
-  const numberButtons = document.querySelectorAll('#buttons .number');
-  numberButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      fillActiveSquare(parseInt(button.id, 10), solution);
-    });
-  });
-}
-
-function fillActiveSquare(enteredValue, solution) {
-  if (activeSquare) {
-    const row = parseInt(activeSquare.dataset.row, 10);
-    const col = parseInt(activeSquare.dataset.col, 10);
-    if (solution[row][col] === enteredValue) {
-      activeSquare.textContent = enteredValue;
-      activeSquare.classList.add('fixed');
-      activeSquare.classList.remove('selected');
-      activeSquare = null;
-      checkGameCompleted();
-    } else {
-      activeSquare.classList.add('error');
-      // игра не вылетает
-      setTimeout(() => activeSquare.classList.remove('error'), 500);
-    }
-  }
-}
-
-  document.addEventListener('keydown', function(event) {
-    if (activeSquare && /^[1-9]$/.test(event.key)) {
-      fillActiveSquare(parseInt(event.key, 10), sudokuSolution);
-    }
-  });
-  let timerInterval;
+    let timerInterval;
     let secondsElapsed = 0;
-    
+    let gameCount = 0; // номер игры
+    let gameHistory = []; // массив истории игр
+
     function updateTimer() {
       secondsElapsed++;
       const minutes = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
@@ -214,21 +147,131 @@ function fillActiveSquare(enteredValue, solution) {
       document.getElementById('timer').textContent = 'Время: 00:00';
       timerInterval = setInterval(updateTimer, 1000);
     }
-
-    function startGame() {
-      const blanksCount = parseInt(document.getElementById('difficulty').value, 10);
-      sudokuSolution = generateSudoku();
-      const puzzleBoard = createPuzzle(sudokuSolution, blanksCount);
-      renderBoard(puzzleBoard);
-      setupBoardInteraction(sudokuSolution);
-      startTimer();
+    
+    function generateSudoku() {
+      const board = Array.from({ length: 9 }, () => Array(9).fill(0));
+      function isValid(board, row, col, num) {
+        for (let i = 0; i < 9; i++) {
+          if (board[row][i] === num || board[i][col] === num) return false;
+        }
+        const startRow = Math.floor(row / 3) * 3;
+        const startCol = Math.floor(col / 3) * 3;
+        for (let i = 0; i < 3; i++) {
+          for (let j = 0; j < 3; j++) {
+            if (board[startRow + i][startCol + j] === num) return false;
+          }
+        }
+        return true;
+      }
+      function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+      function solve(board) {
+        for (let row = 0; row < 9; row++) {
+          for (let col = 0; col < 9; col++) {
+            if (board[row][col] === 0) {
+              const numbers = shuffle([1,2,3,4,5,6,7,8,9]);
+              for (let num of numbers) {
+                if (isValid(board, row, col, num)) {
+                  board[row][col] = num;
+                  if (solve(board)) return true;
+                  board[row][col] = 0;
+                }
+              }
+              return false;
+            }
+          }
+        }
+        return true;
+      }
+      solve(board);
+      return board;
     }
     
-    document.getElementById('newGame').addEventListener('click', startGame);
-    let gameCount = 0;
-    let gameHistory = [];
+    function createPuzzle(solution, blanksCount) {
+      const puzzle = solution.map(row => row.slice());
+      let removed = 0;
+      while (removed < blanksCount) {
+        const row = Math.floor(Math.random() * 9);
+        const col = Math.floor(Math.random() * 9);
+        if (puzzle[row][col] !== 0) {
+          puzzle[row][col] = 0;
+          removed++;
+        }
+      }
+      return puzzle;
+    }
+    
+    function renderBoard(board) {
+      const boardContainer = document.getElementById('board');
+      boardContainer.innerHTML = '';
+      for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
+          const square = document.createElement('div');
+          square.classList.add('square');
+          square.dataset.row = row;
+          square.dataset.col = col;
+          if (board[row][col] !== 0) {
+            square.textContent = board[row][col];
+            square.classList.add('fixed');
+          }
+          boardContainer.appendChild(square);
+        }
+      }
+    }
+    
+    let activeSquare = null;
+    
+    function setupBoardInteraction(solution) {
+      const squares = document.querySelectorAll('#board .square');
+      squares.forEach(square => {
+        if (!square.classList.contains('fixed')) {
+          square.addEventListener('click', function() {
+            squares.forEach(sq => sq.classList.remove('selected'));
+            square.classList.add('selected');
+            activeSquare = square;
+          });
+        }
+      });
+      const numberButtons = document.querySelectorAll('#buttons .number');
+      numberButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          fillActiveSquare(parseInt(button.id, 10), solution);
+        });
+      });
+    }
+    
+    function fillActiveSquare(enteredValue, solution) {
+      if (activeSquare) {
+        const row = parseInt(activeSquare.dataset.row, 10);
+        const col = parseInt(activeSquare.dataset.col, 10);
+        if (solution[row][col] === enteredValue) {
+          activeSquare.textContent = enteredValue;
+          activeSquare.classList.add('fixed');
+          activeSquare.classList.remove('selected');
+          activeSquare = null;
+          checkGameCompleted();
+        } else {
+          activeSquare.classList.add('error');
+          setTimeout(() => {
+            activeSquare.classList.remove('error');
+          }, 500);
+        }
+      }
+    }
+    
+    document.addEventListener('keydown', function(event) {
+      if (activeSquare && /^[1-9]$/.test(event.key)) {
+        fillActiveSquare(parseInt(event.key, 10), sudokuSolution);
+      }
+    });
     
     function checkGameCompleted() {
+      // Проверяем, заполнены ли все клетки (у которых стоит класс fixed)
       const fixedCount = document.querySelectorAll('#board .square.fixed').length;
       if (fixedCount === 81) {
         clearInterval(timerInterval);
@@ -242,6 +285,7 @@ function fillActiveSquare(enteredValue, solution) {
       const minutes = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
       const seconds = String(secondsElapsed % 60).padStart(2, '0');
       const timeStr = `${minutes}:${seconds}`;
+      // Добавляем запись в историю игр
       gameHistory.push({ game: gameCount, time: timeStr });
       updateHistoryDisplay();
     }
@@ -255,6 +299,23 @@ function fillActiveSquare(enteredValue, solution) {
         historyList.appendChild(li);
       });
     }
+    
+    function startGame() {
+      const blanksCount = parseInt(document.getElementById('difficulty').value, 10);
+      sudokuSolution = generateSudoku();
+      const puzzleBoard = createPuzzle(sudokuSolution, blanksCount);
+      renderBoard(puzzleBoard);
+      setupBoardInteraction(sudokuSolution);
+      startTimer();
+    }
+    
+    let sudokuSolution = generateSudoku();
+    const puzzleBoard = createPuzzle(sudokuSolution, 40);
+    renderBoard(puzzleBoard);
+    setupBoardInteraction(sudokuSolution);
+    startTimer();
+    
+    document.getElementById('newGame').addEventListener('click', startGame);
   </script>
 </body>
 </html>
