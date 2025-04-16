@@ -109,6 +109,20 @@
     solve(board);
     return board;
   }
+  function createPuzzle(solution, blanksCount) {
+    //клонируем решенный судоку чтобы спрятать числа
+    const puzzle = solution.map(row => row.slice()); 
+    let removed = 0;
+    while (removed < blanksCount) {
+      const row = Math.floor(Math.random() * 9);
+      const col = Math.floor(Math.random() * 9);
+      if (puzzle[row][col] !== 0) {
+        puzzle[row][col] = 0;
+        removed++;
+      }
+    }
+    return puzzle;
+  }
   </script>
 </body>
 </html>
