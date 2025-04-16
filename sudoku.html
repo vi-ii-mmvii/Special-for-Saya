@@ -140,6 +140,44 @@
       }
     }
   }
+  let activeSquare = null;
+
+function setupBoardInteraction(solution) {
+  const squares = document.querySelectorAll('#board .square');
+  squares.forEach(square => {
+    if (!square.classList.contains('fixed')) {
+      square.addEventListener('click', function() {
+        squares.forEach(sq => sq.classList.remove('selected'));
+        square.classList.add('selected');
+        activeSquare = square;
+      });
+    }
+  });
+  const numberButtons = document.querySelectorAll('#buttons .number');
+  numberButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      fillActiveSquare(parseInt(button.id, 10), solution);
+    });
+  });
+}
+
+function fillActiveSquare(enteredValue, solution) {
+  if (activeSquare) {
+    const row = parseInt(activeSquare.dataset.row, 10);
+    const col = parseInt(activeSquare.dataset.col, 10);
+    if (solution[row][col] === enteredValue) {
+      activeSquare.textContent = enteredValue;
+      activeSquare.classList.add('fixed');
+      activeSquare.classList.remove('selected');
+      activeSquare = null;
+      checkGameCompleted();
+    } else {
+      activeSquare.classList.add('error');
+      // игра не вылетает
+      setTimeout(() => activeSquare.classList.remove('error'), 500);
+    }
+  }
+}
   </script>
 </body>
 </html>
