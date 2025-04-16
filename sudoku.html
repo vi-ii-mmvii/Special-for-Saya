@@ -61,6 +61,7 @@
     <button class="number" id="8">8</button>
     <button class="number" id="9">9</button>
   </div>
+  <div id="timer">Время: 00:00</div>
   <script>
   function generateSudoku() {
     const board = Array.from({ length: 9 }, () => Array(9).fill(0)); //еще нет цифр
@@ -184,6 +185,22 @@ function fillActiveSquare(enteredValue, solution) {
       fillActiveSquare(parseInt(event.key, 10), sudokuSolution);
     }
   });
+  let timerInterval;
+    let secondsElapsed = 0;
+    
+    function updateTimer() {
+      secondsElapsed++;
+      const minutes = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+      const seconds = String(secondsElapsed % 60).padStart(2, '0');
+      document.getElementById('timer').textContent = `Время: ${minutes}:${seconds}`;
+    }
+    
+    function startTimer() {
+      clearInterval(timerInterval);
+      secondsElapsed = 0;
+      document.getElementById('timer').textContent = 'Время: 00:00';
+      timerInterval = setInterval(updateTimer, 1000);
+    }
 
   </script>
 </body>
